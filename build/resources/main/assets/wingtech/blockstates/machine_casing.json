@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "wingtech:block/machine_casing" }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "block.wingtech.testblock": "Bee Generator",
+  "block.wingtech.palladium_ore": "Palladium Ore",
+  "block.wingtech.machine_casing": "Machine Casing",
+  "block.wingtech.flower": "Awesome Flower",
+
+  "item.wingtech.palladium_ingot": "Palladium Ingot",
+
+  "itemGroup.wingtech": "WingTech"
+}
