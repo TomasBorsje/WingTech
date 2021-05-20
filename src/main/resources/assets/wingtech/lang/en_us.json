@@ -5,6 +5,11 @@
   "block.wingtech.flower": "Awesome Flower",
 
   "item.wingtech.palladium_ingot": "Palladium Ingot",
+  "item.wingtech.teacup": "Tea Cup",
+  "item.wingtech.tea": "Tea",
+
+  "wingtech.ui.tea_tooltip_1": "A nice warm cup of tea.",
+  "wingtech.ui.tea_tooltip_2": "Grants %s.",
 
   "itemGroup.wingtech": "WingTech"
 }

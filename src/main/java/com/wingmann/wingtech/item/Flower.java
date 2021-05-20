@@ -1,4 +1,4 @@
-package com.wingmann.wingtech.items;
+package com.wingmann.wingtech.item;
 
 import com.wingmann.wingtech.WingTech;
 import net.minecraft.item.Item;

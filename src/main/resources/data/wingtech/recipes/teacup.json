@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "D D",
+    " Di"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:stick"
+    },
+    "D": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "wingtech:teacup",
+    "count": 4
+  }
+}

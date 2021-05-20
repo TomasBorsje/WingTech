@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "wingtech:item/tea_layer0",
+    "layer1": "wingtech:item/tea_layer1"
+  }
+}

@@ -1,8 +1,11 @@
 package com.wingmann.wingtech;
 
 import com.wingmann.wingtech.blocks.*;
+import com.wingmann.wingtech.color.TeaColour;
 import com.wingmann.wingtech.containers.TestBlockContainer;
-import com.wingmann.wingtech.items.ModItems;
+import com.wingmann.wingtech.item.ModItems;
+import com.wingmann.wingtech.item.Tea;
+import com.wingmann.wingtech.item.crafting.TeaRecipe;
 import com.wingmann.wingtech.setup.ClientProxy;
 import com.wingmann.wingtech.setup.IProxy;
 import com.wingmann.wingtech.setup.ModSetup;
@@ -13,10 +16,15 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
+import net.minecraft.item.*;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.SpecialRecipeSerializer;
+import net.minecraft.item.crafting.SuspiciousStewRecipe;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
@@ -27,6 +35,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistry;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,7 +52,7 @@ public class WingTech
     public WingTech() {
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-
+        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(IRecipeSerializer.class, this::registerRecipeSerializers);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, WorldGen::generateChunk); // World gen listener
@@ -49,21 +60,38 @@ public class WingTech
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        // All blocks, items, biomes, etc will be registered by now
+        // All blocks, item, biomes, etc will be registered by now
         setup.init();
         proxy.init();
+    }
+
+    private void registerRecipeSerializers (RegistryEvent.Register<IRecipeSerializer<?>> event) {
+        LOGGER.debug("Begun loading recipe serializers!");
+        event.getRegistry().register(new SpecialRecipeSerializer<>(TeaRecipe::new).setRegistryName("crafting_special_tea"));
     }
 
     // Subscribe to the event bus
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
+
+        public void registerRecipeSerialziers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+
+        }
+
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
+            LOGGER.debug("Begun loading block serializers!");
             event.getRegistry().register(new TestBlock());
             event.getRegistry().register(new PalladiumOre());
             event.getRegistry().register(new Flower());
             event.getRegistry().register(new MachineCasing());
         }
+
+        @SubscribeEvent
+        public static void onColorHandlerEvent(ColorHandlerEvent.Item event) {
+            event.getItemColors().register(new TeaColour(), ModItems.TEA);
+        }
+
 
         @SubscribeEvent
         public static void onClientSetupEvent(FMLClientSetupEvent event) {
@@ -72,9 +100,11 @@ public class WingTech
 
         @SubscribeEvent
         public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
-            // Register items
+            // Register item
             event.getRegistry().register(ModItems.genericItem("palladium_ingot"));
             event.getRegistry().register(ModItems.genericItem("microminer"));
+            event.getRegistry().register(ModItems.genericItem("teacup"));
+            event.getRegistry().register(new Tea(new Item.Properties().containerItem(ModItems.TEACUP).group(setup.itemGroup).maxStackSize(16)).setRegistryName("tea"));
 
             // Register BlockItems
             event.getRegistry().register(new BlockItem(ModBlocks.TESTBLOCK, new Item.Properties().group(setup.itemGroup)).setRegistryName("testblock"));
