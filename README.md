@@ -1,2 +1,1 @@
-# WingTech
- W.I.P. Minecraft Tech Mod
+![WingTech Banner](https://i.imgur.com/VjiKUxX.png)
