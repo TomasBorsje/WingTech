@@ -9,20 +9,20 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 
 public class WorldGen {
 
-    public static final BlockClusterFeatureConfig FLOWER_CONFIG = (new BlockClusterFeatureConfig.Builder((new WeightedBlockStateProvider()).addWeightedBlockstate(ModBlocks.FLOWER.getDefaultState(), 2), SimpleBlockPlacer.PLACER)).tries(64).build();
+    public static final BlockClusterFeatureConfig FLOWER_CONFIG = (new BlockClusterFeatureConfig.Builder((new WeightedBlockStateProvider()).add(ModBlocks.FLOWER.defaultBlockState(), 2), SimpleBlockPlacer.INSTANCE)).tries(64).build();
 
     public static void generateChunk(final BiomeLoadingEvent event)
     {
         // Generate Palladium Ore between y=48 and y=0
-        ConfiguredFeature<?, ?> ORE_PALLADIUM = Feature.ORE.withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, ModBlocks.PALLADIUM_ORE.getDefaultState(), 7))
-                .range(48).square().func_242731_b(6); // Iron ore is 20
+        ConfiguredFeature<?, ?> ORE_TUNGSTEN = Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ModBlocks.TUNGSTEN_ORE.defaultBlockState(), 7))
+                .range(48).squared().chance(10); // Iron ore is 20
 
-        ConfiguredFeature<?, ?> FLOWER_GEN = Feature.FLOWER.withConfiguration(FLOWER_CONFIG).withPlacement(Features.Placements.VEGETATION_PLACEMENT).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242731_b(2);
+        ConfiguredFeature<?, ?> FLOWER_GEN = Feature.FLOWER.configured(FLOWER_CONFIG).decorated(Features.Placements.ADD_32).count(2);
 
         // Generate ores
-        event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ORE_PALLADIUM);
+        event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ORE_TUNGSTEN);
 
         // Generate vegetation
-        event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FLOWER_GEN);
+        event.getGeneration().addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, FLOWER_GEN);
     }
 }

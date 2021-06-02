@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "wingtech:block/machine_casing",
+    "down": "wingtech:block/machine_casing",
+    "up": "wingtech:block/atmospheric_condenser_top",
+    "east": "wingtech:block/machine_casing",
+    "west": "wingtech:block/machine_casing",
+    "north": "wingtech:block/testblock_front",
+    "south": "wingtech:block/machine_casing"
+  }
+}

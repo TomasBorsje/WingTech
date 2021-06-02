@@ -8,10 +8,12 @@ public class ModSetup {
 
     public ItemGroup itemGroup = new ItemGroup("wingtech") {
         @Override
-        public ItemStack createIcon() {
+        public ItemStack makeIcon() {
             return new ItemStack(ModBlocks.TESTBLOCK);
         }
     };
+
+
 
     public void init()
     {

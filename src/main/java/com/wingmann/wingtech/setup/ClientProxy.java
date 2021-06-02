@@ -1,6 +1,7 @@
 package com.wingmann.wingtech.setup;
 
 import com.wingmann.wingtech.blocks.ModBlocks;
+import com.wingmann.wingtech.screens.AtmosphericCondenserScreen;
 import com.wingmann.wingtech.screens.TestBlockScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
@@ -11,12 +12,14 @@ public class ClientProxy implements IProxy {
 
     @Override
     public void init() {
-        ScreenManager.registerFactory(ModBlocks.TESTBLOCK_CONTAINER, TestBlockScreen::new);
+        ScreenManager.register(ModBlocks.TESTBLOCK_CONTAINER, TestBlockScreen::new);
+        ScreenManager.register(ModBlocks.ATMOSPHERIC_CONDENSER_CONTAINER, AtmosphericCondenserScreen::new);
     }
+
 
     @Override
     public World getclientWorld() {
-        return Minecraft.getInstance().world;
+        return Minecraft.getInstance().level;
     }
 
     @Override

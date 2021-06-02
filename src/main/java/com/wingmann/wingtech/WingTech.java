@@ -1,29 +1,32 @@
 package com.wingmann.wingtech;
 
 import com.wingmann.wingtech.blocks.*;
-import com.wingmann.wingtech.color.TeaColour;
+import com.wingmann.wingtech.containers.AtmosphericCondenserContainer;
 import com.wingmann.wingtech.containers.TestBlockContainer;
+import com.wingmann.wingtech.data.TeaRecipeBuilder;
+import com.wingmann.wingtech.init.ClientSetup;
+import com.wingmann.wingtech.init.TeaSetup;
+import com.wingmann.wingtech.item.DynamicTea;
 import com.wingmann.wingtech.item.ModItems;
-import com.wingmann.wingtech.item.Tea;
-import com.wingmann.wingtech.item.crafting.TeaRecipe;
+import com.wingmann.wingtech.registry.TeaRegistry;
 import com.wingmann.wingtech.setup.ClientProxy;
 import com.wingmann.wingtech.setup.IProxy;
 import com.wingmann.wingtech.setup.ModSetup;
 import com.wingmann.wingtech.setup.ServerProxy;
+import com.wingmann.wingtech.tileentities.AtmosphericCondenserTile;
 import com.wingmann.wingtech.tileentities.TestBlockTile;
+import com.wingmann.wingtech.util.TeaData;
 import com.wingmann.wingtech.world.WorldGen;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.*;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.SpecialRecipeSerializer;
-import net.minecraft.item.crafting.SuspiciousStewRecipe;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -35,27 +38,38 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistry;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.File;
 
 @Mod(WingTech.MODID)
 public class WingTech
 {
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
     public static IProxy proxy = DistExecutor.unsafeRunForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
     public static ModSetup setup = new ModSetup();
     public static final String MODID = "wingtech";
 
+    public static File configFolder = new File("./config/wingtech");
+
     public WingTech() {
+        TeaSetup.setupTeas();
+        TeaSetup.registerTeaModels();
+        TeaSetup.registerTeaLang();
+        TeaSetup.registerTeasItems();
+
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ClientSetup::setupResourcePack); // Setup client resource pack
+
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(IRecipeSerializer.class, this::registerRecipeSerializers);
-        // Register ourselves for server and other game events we are interested in
+        // Register deferred item registry
+        ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, WorldGen::generateChunk); // World gen listener
+
+
     }
 
     private void setup(final FMLCommonSetupEvent event)
@@ -63,60 +77,58 @@ public class WingTech
         // All blocks, item, biomes, etc will be registered by now
         setup.init();
         proxy.init();
+        MinecraftForge.EVENT_BUS.register(new TeaRecipeBuilder());
     }
 
-    private void registerRecipeSerializers (RegistryEvent.Register<IRecipeSerializer<?>> event) {
-        LOGGER.debug("Begun loading recipe serializers!");
-        event.getRegistry().register(new SpecialRecipeSerializer<>(TeaRecipe::new).setRegistryName("crafting_special_tea"));
-    }
-
-    // Subscribe to the event bus
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
 
-        public void registerRecipeSerialziers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
-
-        }
+//        @SubscribeEvent
+//        public static void registerRecipeSerialziers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+//            event.getRegistry().register(new SpecialRecipeSerializer<>(TeaRecipe::new).setRegistryName("crafting_special_tea"));
+//        }
 
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
-            LOGGER.debug("Begun loading block serializers!");
             event.getRegistry().register(new TestBlock());
-            event.getRegistry().register(new PalladiumOre());
+            event.getRegistry().register(new AtmosphericCondenser());
+            event.getRegistry().register(new TungstenOre());
             event.getRegistry().register(new Flower());
             event.getRegistry().register(new MachineCasing());
         }
 
         @SubscribeEvent
         public static void onColorHandlerEvent(ColorHandlerEvent.Item event) {
-            event.getItemColors().register(new TeaColour(), ModItems.TEA);
+            for(TeaData data : TeaRegistry.getRegistry().getTeaData().values()) {
+                event.getItemColors().register(DynamicTea::getColor, ForgeRegistries.ITEMS.getValue(new ResourceLocation("wingtech:dynamictea_"+data.Type.toLowerCase().replace(' ', '_'))));
+            }
         }
-
 
         @SubscribeEvent
         public static void onClientSetupEvent(FMLClientSetupEvent event) {
-            RenderTypeLookup.setRenderLayer(ModBlocks.FLOWER, RenderType.getCutout()); // Set flower block to be rendered properly
+            RenderTypeLookup.setRenderLayer(ModBlocks.FLOWER, RenderType.cutout()); // Set flower block to be rendered properly
         }
 
         @SubscribeEvent
         public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
             // Register item
-            event.getRegistry().register(ModItems.genericItem("palladium_ingot"));
-            event.getRegistry().register(ModItems.genericItem("microminer"));
+            event.getRegistry().register(ModItems.genericItem("tungsten_ingot"));
             event.getRegistry().register(ModItems.genericItem("teacup"));
-            event.getRegistry().register(new Tea(new Item.Properties().containerItem(ModItems.TEACUP).group(setup.itemGroup).maxStackSize(16)).setRegistryName("tea"));
 
             // Register BlockItems
-            event.getRegistry().register(new BlockItem(ModBlocks.TESTBLOCK, new Item.Properties().group(setup.itemGroup)).setRegistryName("testblock"));
-            event.getRegistry().register(new BlockItem(ModBlocks.PALLADIUM_ORE, new Item.Properties().group(setup.itemGroup)).setRegistryName("palladium_ore"));
-            event.getRegistry().register(new BlockItem(ModBlocks.FLOWER, new Item.Properties().group(setup.itemGroup)).setRegistryName("flower"));
-            event.getRegistry().register(new BlockItem(ModBlocks.MACHINE_CASING, new Item.Properties().group(setup.itemGroup)).setRegistryName("machine_casing"));
+            event.getRegistry().register(new BlockItem(ModBlocks.TESTBLOCK, new Item.Properties().tab(setup.itemGroup)).setRegistryName("testblock"));
+            event.getRegistry().register(new BlockItem(ModBlocks.ATMOSPHERIC_CONDENSER, new Item.Properties().tab(setup.itemGroup)).setRegistryName("atmospheric_condenser"));
+            event.getRegistry().register(new BlockItem(ModBlocks.TUNGSTEN_ORE, new Item.Properties().tab(setup.itemGroup)).setRegistryName("tungsten_ore"));
+            event.getRegistry().register(new BlockItem(ModBlocks.FLOWER, new Item.Properties().tab(setup.itemGroup)).setRegistryName("flower"));
+            event.getRegistry().register(new BlockItem(ModBlocks.MACHINE_CASING, new Item.Properties().tab(setup.itemGroup)).setRegistryName("machine_casing"));
+
         }
 
         @SubscribeEvent
         public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event)
         {
-            event.getRegistry().register(TileEntityType.Builder.create(TestBlockTile::new, ModBlocks.TESTBLOCK).build((null)).setRegistryName("testblock"));
+            event.getRegistry().register(TileEntityType.Builder.of(TestBlockTile::new, ModBlocks.TESTBLOCK).build((null)).setRegistryName("testblock"));
+            event.getRegistry().register(TileEntityType.Builder.of(AtmosphericCondenserTile::new, ModBlocks.ATMOSPHERIC_CONDENSER).build((null)).setRegistryName("atmospheric_condenser"));
         }
 
         @SubscribeEvent
@@ -126,6 +138,10 @@ public class WingTech
                 BlockPos pos = data.readBlockPos();
                 return new TestBlockContainer(windowId, proxy.getclientWorld(), pos, inv, proxy.getClientPlayer());
             })).setRegistryName("wingtech:testblock"));
+            event.getRegistry().register(IForgeContainerType.create(((windowId, inv, data) -> {
+                BlockPos pos = data.readBlockPos();
+                return new AtmosphericCondenserContainer(windowId, proxy.getclientWorld(), pos, inv, proxy.getClientPlayer());
+            })).setRegistryName("wingtech:atmospheric_condenser"));
         }
     }
 }

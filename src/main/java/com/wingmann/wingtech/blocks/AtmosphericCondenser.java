@@ -1,6 +1,6 @@
 package com.wingmann.wingtech.blocks;
 
-import com.wingmann.wingtech.tileentities.TestBlockTile;
+import com.wingmann.wingtech.tileentities.AtmosphericCondenserTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -22,23 +22,24 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class TestBlock extends Block {
-    public TestBlock() {
+public class AtmosphericCondenser extends Block{
+
+    public AtmosphericCondenser() {
         super(Properties.of(Material.METAL)
                 .sound(SoundType.METAL)
                 .strength(2.5f)
         );
-        setRegistryName("testblock");
+        setRegistryName("atmospheric_condenser");
     }
 
     @Override
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if(!worldIn.isClientSide())
+    public ActionResultType use(BlockState p_225533_1_, World worldIn, BlockPos pos, PlayerEntity player, Hand p_225533_5_, BlockRayTraceResult p_225533_6_) {
+        if(!worldIn.isClientSide()) // If we're on clientside
         {
             TileEntity entity = worldIn.getBlockEntity(pos);
             if(entity instanceof INamedContainerProvider)
             {
-                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) entity, entity.getBlockPos() );
+                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) entity, entity.getBlockPos()); // Open GUI
             }
         }
         return ActionResultType.SUCCESS;
@@ -52,17 +53,21 @@ public class TestBlock extends Block {
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new TestBlockTile();
+        return new AtmosphericCondenserTile();
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return getStateForPlacement(context).setValue(BlockStateProperties.HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
+        return defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(BlockStateProperties.HORIZONTAL_FACING);
     }
+
+
+
+
 }

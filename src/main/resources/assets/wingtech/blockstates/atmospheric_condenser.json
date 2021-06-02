@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "wingtech:block/atmospheric_condenser" },
+    "facing=south": { "model": "wingtech:block/atmospheric_condenser", "y": 180 },
+    "facing=west": { "model": "wingtech:block/atmospheric_condenser", "y": 270 },
+    "facing=east": { "model": "wingtech:block/atmospheric_condenser", "y": 90 }
+  }
+}

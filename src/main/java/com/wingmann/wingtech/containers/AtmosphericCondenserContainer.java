@@ -1,7 +1,7 @@
 package com.wingmann.wingtech.containers;
 
 import com.wingmann.wingtech.blocks.ModBlocks;
-import com.wingmann.wingtech.tileentities.TestBlockTile;
+import com.wingmann.wingtech.tileentities.AtmosphericCondenserTile;
 import com.wingmann.wingtech.tools.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -21,9 +21,9 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-import static com.wingmann.wingtech.blocks.ModBlocks.TESTBLOCK_CONTAINER;
+import static com.wingmann.wingtech.blocks.ModBlocks.ATMOSPHERIC_CONDENSER_CONTAINER;
 
-public class TestBlockContainer extends Container {
+public class AtmosphericCondenserContainer extends Container {
 
     private TileEntity entity;
     private PlayerEntity playerEntity;
@@ -35,8 +35,8 @@ public class TestBlockContainer extends Container {
     }
 
 
-    public TestBlockContainer(int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        super(TESTBLOCK_CONTAINER, id);
+    public AtmosphericCondenserContainer(int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+        super(ATMOSPHERIC_CONDENSER_CONTAINER, id);
         entity = world.getBlockEntity(pos);
         this.playerEntity = playerEntity;
         this.playerInventory = new InvWrapper(playerInventory);
@@ -54,10 +54,9 @@ public class TestBlockContainer extends Container {
 
             @Override
             public void set(int value) {
-                ((TestBlockTile)entity).setProgressTicks(value);
+                ((AtmosphericCondenserTile)entity).setProgressTicks(value);
             }
         });
-
         addDataSlot(new IntReferenceHolder() {
             @Override
             public int get() {
@@ -94,7 +93,7 @@ public class TestBlockContainer extends Container {
 
     public int getTileEntityCounter()
     {
-        return ((TestBlockTile)entity).getProgressTicks();
+        return ((AtmosphericCondenserTile)entity).getProgressTicks();
     }
 
     @Override
@@ -132,6 +131,7 @@ public class TestBlockContainer extends Container {
             if (stack.getCount() == itemstack.getCount()) {
                 return ItemStack.EMPTY;
             }
+
             slot.onTake(playerIn, stack);
         }
 
@@ -166,6 +166,6 @@ public class TestBlockContainer extends Container {
 
     @Override
     public boolean stillValid(PlayerEntity playerIn) {
-        return stillValid(IWorldPosCallable.create(entity.getLevel(), entity.getBlockPos()), playerEntity, ModBlocks.TESTBLOCK);
+        return stillValid(IWorldPosCallable.create(entity.getLevel(), entity.getBlockPos()), playerEntity, ModBlocks.ATMOSPHERIC_CONDENSER);
     }
 }

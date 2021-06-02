@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "item": "wingtech:palladium_ore"
+    "item": "wingtech:tungsten_ore"
   },
-  "result": "wingtech:palladium_ore",
+  "result": "wingtech:tungsten_ingot",
   "experience": 0.4,
   "cookingtime": 200
 }

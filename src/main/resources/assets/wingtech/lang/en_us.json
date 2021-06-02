@@ -1,15 +1,16 @@
 {
   "block.wingtech.testblock": "Bee Generator",
-  "block.wingtech.palladium_ore": "Palladium Ore",
+  "block.wingtech.atmospheric_condenser": "Atmospheric Condenser",
+  "block.wingtech.tungsten_ore": "Tungsten Ore",
   "block.wingtech.machine_casing": "Machine Casing",
-  "block.wingtech.flower": "Awesome Flower",
+  "block.wingtech.flower": "§6Awesome Flower",
 
-  "item.wingtech.palladium_ingot": "Palladium Ingot",
+  "item.wingtech.tungsten_ingot": "Tungsten Ingot",
   "item.wingtech.teacup": "Tea Cup",
-  "item.wingtech.tea": "Tea",
+  "item.wingtech.dynamictea": "Tea",
 
-  "wingtech.ui.tea_tooltip_1": "A nice warm cup of tea.",
-  "wingtech.ui.tea_tooltip_2": "Grants %s.",
+  "wingtech.ui.dynamictea_tooltip_1": "§7A nice warm cup of tea.",
+  "wingtech.ui.dynamictea_tooltip_2": "§7Grants %s.",
 
   "itemGroup.wingtech": "WingTech"
 }

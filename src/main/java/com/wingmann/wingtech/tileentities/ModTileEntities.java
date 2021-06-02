@@ -7,4 +7,7 @@ public class ModTileEntities {
 
     @ObjectHolder("wingtech:testblock")
     public static TileEntityType<TestBlockTile> TESTBLOCK_TILE;
+
+    @ObjectHolder("wingtech:atmospheric_condenser")
+    public static TileEntityType<TestBlockTile> ATMOSPHERIC_CONDENSER_TILE;
 }

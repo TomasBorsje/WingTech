@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "wingtech:item/palladium_ingot"
+    "layer0": "wingtech:item/tungsten_ingot"
   }
 }

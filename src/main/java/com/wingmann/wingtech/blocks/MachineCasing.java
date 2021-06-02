@@ -6,9 +6,9 @@ import net.minecraft.block.material.Material;
 
 public class MachineCasing extends Block {
     public MachineCasing() {
-        super(Properties.create(Material.IRON)
+        super(Properties.of(Material.METAL)
                 .sound(SoundType.METAL)
-                .hardnessAndResistance(2.5f)
+                .strength(2.5f)
         );
         setRegistryName("machine_casing");
     }

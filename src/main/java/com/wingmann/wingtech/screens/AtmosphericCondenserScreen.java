@@ -1,12 +1,11 @@
 package com.wingmann.wingtech.screens;
 
-import com.wingmann.wingtech.WingTech;
-import com.wingmann.wingtech.containers.TestBlockContainer;
-import com.wingmann.wingtech.tileentities.AtmosphericCondenserTile;
-import com.wingmann.wingtech.tileentities.TestBlockTile;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.wingmann.wingtech.WingTech;
+import com.wingmann.wingtech.containers.AtmosphericCondenserContainer;
+import com.wingmann.wingtech.tileentities.AtmosphericCondenserTile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -15,14 +14,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
-public class TestBlockScreen extends ContainerScreen<TestBlockContainer> {
+public class AtmosphericCondenserScreen extends ContainerScreen<AtmosphericCondenserContainer> {
 
-    private ResourceLocation GUI = new ResourceLocation(WingTech.MODID, "textures/gui/testblock_gui.png");
-    private TestBlockTile tile;
-
-    public TestBlockScreen(TestBlockContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    private ResourceLocation GUI = new ResourceLocation(WingTech.MODID, "textures/gui/atmospheric_condenser_gui.png");
+    public AtmosphericCondenserScreen(AtmosphericCondenserContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
-        this.tile = (TestBlockTile) screenContainer.getTile();
     }
 
     @Override
@@ -39,7 +35,7 @@ public class TestBlockScreen extends ContainerScreen<TestBlockContainer> {
     @Override
     protected void renderLabels(MatrixStack stack, int mouseX, int mouseY) {
         if(menu.getTileEntityCounter() != -1)
-            drawString(stack, Minecraft.getInstance().font, "Progress: " + Math.round((menu.getTileEntityCounter()) / (float) AtmosphericCondenserTile.TICKS_PER_OPERATION * 100) +"%", 10, 10, 0xffffff);
+        drawString(stack, Minecraft.getInstance().font, "Progress: " + Math.round((menu.getTileEntityCounter()) / (float)AtmosphericCondenserTile.TICKS_PER_OPERATION * 100) +"%", 10, 10, 0xffffff);
     }
 
     @Override
