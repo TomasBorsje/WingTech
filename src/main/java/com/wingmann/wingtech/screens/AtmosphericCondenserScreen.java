@@ -11,8 +11,7 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class AtmosphericCondenserScreen extends ContainerScreen<AtmosphericCondenserContainer> {
 
@@ -21,21 +20,25 @@ public class AtmosphericCondenserScreen extends ContainerScreen<AtmosphericConde
         super(screenContainer, inv, titleIn);
     }
 
+    private static int GUI_WIDTH = 180;
+    private static int GUI_HEIGHT = 152;
+
+
     @Override
     public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(stack);
         super.render(stack, mouseX, mouseY, partialTicks);
         if(isHovering(157, 9, 11, 51, mouseX, mouseY))
         {
-            renderTooltip(stack, new StringTextComponent(TextFormatting.GREEN+"Energy: "+menu.getEnergy()+" / 50,000RF"), mouseX, mouseY);
+            renderTooltip(stack, new TranslationTextComponent("wingtech.ui.energy_bar", menu.getEnergy()), mouseX, mouseY);
         }
         renderTooltip(stack, mouseX, mouseY);
     }
 
     @Override
     protected void renderLabels(MatrixStack stack, int mouseX, int mouseY) {
-        if(menu.getTileEntityCounter() != -1)
-        drawString(stack, Minecraft.getInstance().font, "Progress: " + Math.round((menu.getTileEntityCounter()) / (float)AtmosphericCondenserTile.TICKS_PER_OPERATION * 100) +"%", 10, 10, 0xffffff);
+        String name = new TranslationTextComponent("block.wingtech.atmospheric_condenser").getString();
+        Minecraft.getInstance().font.draw(stack, name,GUI_WIDTH/2 - font.width(name)/2, 4, 0x404040);
     }
 
     @Override

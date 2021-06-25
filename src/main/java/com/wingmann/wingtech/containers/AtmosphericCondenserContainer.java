@@ -21,6 +21,8 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
+import javax.annotation.Nonnull;
+
 import static com.wingmann.wingtech.blocks.ModBlocks.ATMOSPHERIC_CONDENSER_CONTAINER;
 
 public class AtmosphericCondenserContainer extends Container {
@@ -42,7 +44,12 @@ public class AtmosphericCondenserContainer extends Container {
         this.playerInventory = new InvWrapper(playerInventory);
 
         entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-            addSlot(new SlotItemHandler(h, 0, 82, 24));
+            addSlot(new SlotItemHandler(h, 0, 82, 24) {
+                @Override
+                public boolean mayPlace(@Nonnull ItemStack stack) {
+                    return false;
+                }
+            });
         });
         layoutPlayerInventorySlots(10, 70);
 

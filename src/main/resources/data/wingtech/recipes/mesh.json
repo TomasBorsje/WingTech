@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " t ",
+    "tRt",
+    " t "
+  ],
+  "key": {
+    "t": {
+      "item": "minecraft:string"
+    },
+    "R": {
+      "item": "minecraft:blue_dye"
+    }
+  },
+  "result": {
+    "item": "wingtech:mesh",
+    "count": 1
+  }
+}

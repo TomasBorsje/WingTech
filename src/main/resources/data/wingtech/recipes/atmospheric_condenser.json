@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "tmt",
+    "pCp",
+    "ttt"
+  ],
+  "key": {
+    "t": {
+      "item": "wingtech:tungsten_ingot"
+    },
+    "p": {
+      "item": "wingtech:power_cell"
+    },
+    "m": {
+      "item": "wingtech:mesh"
+    },
+    "C": {
+      "item": "wingtech:machine_casing"
+    }
+  },
+  "result": {
+    "item": "wingtech:atmospheric_condenser",
+    "count": 1
+  }
+}

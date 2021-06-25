@@ -34,7 +34,7 @@ public class AtmosphericCondenserTile extends TileEntity implements ITickableTil
         super(ATMOSPHERIC_CONDENSER_TILE);
     }
 
-    public static int TICKS_PER_OPERATION = 60;
+    public static int TICKS_PER_OPERATION = 120;
     public static int RF_PER_TICK_USAGE = 0;
     private static int AWAITING_OPERATION = -1;
     private static int PROCESSING = 0;
@@ -42,7 +42,7 @@ public class AtmosphericCondenserTile extends TileEntity implements ITickableTil
 
     private ItemStackHandler itemHandler = createHandler();
     private CustomEnergyStorage energyStorage = createEnergy();
-    private int progressTicks = -1;
+    private int progressTicks = AWAITING_OPERATION;
     private Random rand = new Random();
     private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
     private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);

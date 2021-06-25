@@ -8,9 +8,13 @@
   "item.wingtech.tungsten_ingot": "Tungsten Ingot",
   "item.wingtech.teacup": "Tea Cup",
   "item.wingtech.dynamictea": "Tea",
+  "item.wingtech.power_cell": "Power Cell",
+  "item.wingtech.mesh": "Mesh",
+  "item.wingtech.fertilizer": "Industrial Fertilizer",
 
   "wingtech.ui.dynamictea_tooltip_1": "§7A nice warm cup of tea.",
   "wingtech.ui.dynamictea_tooltip_2": "§7Grants %s.",
+  "wingtech.ui.energy_bar": "§aEnergy: %s / 50,000 RF",
 
   "itemGroup.wingtech": "WingTech"
 }
