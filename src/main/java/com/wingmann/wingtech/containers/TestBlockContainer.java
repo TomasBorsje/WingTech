@@ -1,7 +1,7 @@
 package com.wingmann.wingtech.containers;
 
 import com.wingmann.wingtech.blocks.ModBlocks;
-import com.wingmann.wingtech.tileentities.TestBlockTile;
+import com.wingmann.wingtech.tile.TestBlockTile;
 import com.wingmann.wingtech.tools.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

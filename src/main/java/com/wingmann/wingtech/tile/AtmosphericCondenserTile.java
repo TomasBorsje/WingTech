@@ -1,6 +1,7 @@
-package com.wingmann.wingtech.tileentities;
+package com.wingmann.wingtech.tile;
 
 import com.wingmann.wingtech.containers.AtmosphericCondenserContainer;
+import com.wingmann.wingtech.item.ModItems;
 import com.wingmann.wingtech.tools.CustomEnergyStorage;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,7 +9,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-import static com.wingmann.wingtech.tileentities.ModTileEntities.ATMOSPHERIC_CONDENSER_TILE;
+import static com.wingmann.wingtech.tile.ModTileEntities.ATMOSPHERIC_CONDENSER_TILE;
 
 public class AtmosphericCondenserTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
     public AtmosphericCondenserTile() {
@@ -62,10 +62,10 @@ public class AtmosphericCondenserTile extends TileEntity implements ITickableTil
         }
         if(getProgressTicks() >= TICKS_PER_OPERATION) // Complete machine's operation
         {
-            itemHandler.insertItem(0, new ItemStack(Items.COAL), false);
+            itemHandler.insertItem(0, new ItemStack(ModItems.NITROGEN.get()), false);
             setProgressTicks(AWAITING_OPERATION);
         }
-        if(getProgressTicks() >= PROCESSING) { // Machine has received a diamond and is processing
+        if(getProgressTicks() >= PROCESSING) { // Machine is processing
             if(energyStorage.getEnergyStored() >= RF_PER_TICK_USAGE) { // If machine has enough rf for a tick of processing
                 energyStorage.consumeEnergy(RF_PER_TICK_USAGE); // Use rf
                 setProgressTicks(getProgressTicks() + 1);
@@ -102,13 +102,13 @@ public class AtmosphericCondenserTile extends TileEntity implements ITickableTil
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return stack.getItem() == Items.COAL;
+                return stack.getItem() == ModItems.NITROGEN.get();
             }
 
             @Nonnull
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                if (stack.getItem() != Items.COAL) {
+                if (stack.getItem() != ModItems.NITROGEN.get()) {
                     return stack;
                 }
                 return super.insertItem(slot, stack, simulate);

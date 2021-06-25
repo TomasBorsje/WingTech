@@ -5,7 +5,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.wingmann.wingtech.WingTech;
 import com.wingmann.wingtech.containers.AtmosphericCondenserContainer;
-import com.wingmann.wingtech.tileentities.AtmosphericCondenserTile;
+import com.wingmann.wingtech.tile.AtmosphericCondenserTile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;

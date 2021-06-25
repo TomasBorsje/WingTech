@@ -11,6 +11,9 @@
   "item.wingtech.power_cell": "Power Cell",
   "item.wingtech.mesh": "Mesh",
   "item.wingtech.fertilizer": "Industrial Fertilizer",
+  "item.wingtech.nitrogen": "Nitrogen",
+  "item.wingtech.oxygen": "Oxygen",
+  "item.wingtech.hydrogen": "Hydrogen",
 
   "wingtech.ui.dynamictea_tooltip_1": "§7A nice warm cup of tea.",
   "wingtech.ui.dynamictea_tooltip_2": "§7Grants %s.",

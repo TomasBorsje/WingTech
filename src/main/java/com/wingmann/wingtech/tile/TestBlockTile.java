@@ -1,4 +1,4 @@
-package com.wingmann.wingtech.tileentities;
+package com.wingmann.wingtech.tile;
 
 import com.wingmann.wingtech.containers.TestBlockContainer;
 import com.wingmann.wingtech.tools.CustomEnergyStorage;
@@ -36,7 +36,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-import static com.wingmann.wingtech.tileentities.ModTileEntities.TESTBLOCK_TILE;
+import static com.wingmann.wingtech.tile.ModTileEntities.TESTBLOCK_TILE;
 
 public class TestBlockTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
     public TestBlockTile() {

@@ -12,9 +12,12 @@ public class ModItems {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, WingTech.MODID);
 
-    public static final RegistryObject<?> MESH = ITEMS.register("mesh", ModItems::genericItem);
-    public static final RegistryObject<?> POWER_CELL = ITEMS.register("power_cell", ModItems::genericItem);
-    public static final RegistryObject<?> FERTILIZER = ITEMS.register("fertilizer", Fertilizer::new);
+    public static final RegistryObject<Item> MESH = ITEMS.register("mesh", ModItems::genericItem);
+    public static final RegistryObject<Item> POWER_CELL = ITEMS.register("power_cell", ModItems::genericItem);
+    public static final RegistryObject<Item> FERTILIZER = ITEMS.register("fertilizer", Fertilizer::new);
+    public static final RegistryObject<Item> NITROGEN = ITEMS.register("nitrogen", ModItems::genericItem);
+    public static final RegistryObject<Item> OXYGEN = ITEMS.register("oxygen", ModItems::genericItem);
+    public static final RegistryObject<Item> HYDROGEN = ITEMS.register("hydrogen", ModItems::genericItem);
 
     @ObjectHolder("wingtech:tungsten_ingot")
     public static Item TUNGSTEN_INGOT;

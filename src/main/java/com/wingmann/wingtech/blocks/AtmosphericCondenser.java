@@ -1,6 +1,6 @@
 package com.wingmann.wingtech.blocks;
 
-import com.wingmann.wingtech.tileentities.AtmosphericCondenserTile;
+import com.wingmann.wingtech.tile.AtmosphericCondenserTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;

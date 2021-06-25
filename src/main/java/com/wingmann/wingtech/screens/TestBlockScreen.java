@@ -2,8 +2,8 @@ package com.wingmann.wingtech.screens;
 
 import com.wingmann.wingtech.WingTech;
 import com.wingmann.wingtech.containers.TestBlockContainer;
-import com.wingmann.wingtech.tileentities.AtmosphericCondenserTile;
-import com.wingmann.wingtech.tileentities.TestBlockTile;
+import com.wingmann.wingtech.tile.AtmosphericCondenserTile;
+import com.wingmann.wingtech.tile.TestBlockTile;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
