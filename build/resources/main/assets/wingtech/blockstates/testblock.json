@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": { "model": "wingtech:block/testblock" },
-    "facing=south": { "model": "wingtech:block/testblock", "y": 180 },
-    "facing=west": { "model": "wingtech:block/testblock", "y": 270 },
-    "facing=east": { "model": "wingtech:block/testblock", "y": 90 }
-  }
-}
