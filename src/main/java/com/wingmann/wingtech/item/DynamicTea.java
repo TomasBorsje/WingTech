@@ -46,10 +46,10 @@ public class DynamicTea extends Item {
             }
         }
         if (stack.isEmpty()) {
-            return new ItemStack(ModItems.TEACUP); // Replace tea with empty cup
+            return new ItemStack(ModItems.TEACUP.get()); // Replace tea with empty cup
         } else {
             if (playerentity != null && !playerentity.abilities.instabuild) {
-                ItemStack itemstack = new ItemStack(ModItems.TEACUP);
+                ItemStack itemstack = new ItemStack(ModItems.TEACUP.get());
                 if (!playerentity.inventory.add(itemstack)) {
                     playerentity.drop(itemstack, false);
                 }

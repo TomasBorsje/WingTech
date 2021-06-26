@@ -29,7 +29,6 @@ public class AtmosphericCondenser extends Block{
                 .sound(SoundType.METAL)
                 .strength(2.5f)
         );
-        setRegistryName("atmospheric_condenser");
     }
 
     @Override

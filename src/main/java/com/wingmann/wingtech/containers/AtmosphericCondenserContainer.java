@@ -191,6 +191,6 @@ public class AtmosphericCondenserContainer extends Container {
 
     @Override
     public boolean stillValid(PlayerEntity playerIn) {
-        return stillValid(IWorldPosCallable.create(entity.getLevel(), entity.getBlockPos()), playerEntity, ModBlocks.ATMOSPHERIC_CONDENSER);
+        return stillValid(IWorldPosCallable.create(entity.getLevel(), entity.getBlockPos()), playerEntity, ModBlocks.ATMOSPHERIC_CONDENSER.get());
     }
 }

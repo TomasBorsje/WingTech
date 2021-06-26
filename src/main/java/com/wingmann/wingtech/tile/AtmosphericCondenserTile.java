@@ -65,14 +65,20 @@ public class AtmosphericCondenserTile extends TileEntity implements ITickableTil
         if(getProgressTicks() >= TICKS_PER_OPERATION) // Complete machine's operation
         {
             ItemStack output = new ItemStack(products[rand.nextInt(products.length)]);
+            boolean addedItem = false;
             for(int i = 0; i < itemHandler.getSlots(); i++) {
                 if(itemHandler.getStackInSlot(i).getItem() == output.getItem() && itemHandler.getStackInSlot(i).getCount() < itemHandler.getStackInSlot(i).getMaxStackSize()) {
                     itemHandler.getStackInSlot(i).grow(1);
+                    addedItem = true;
                     break;
                 }
-                else if(itemHandler.getStackInSlot(i).isEmpty()) {
-                    itemHandler.insertItem(i, output, false);
-                    break;
+            }
+            if(!addedItem) {
+                for(int i = 0; i < itemHandler.getSlots(); i++) {
+                    if (itemHandler.getStackInSlot(i).isEmpty()) {
+                        itemHandler.insertItem(i, output, false);
+                        break;
+                    }
                 }
             }
             setProgressTicks(AWAITING_OPERATION);

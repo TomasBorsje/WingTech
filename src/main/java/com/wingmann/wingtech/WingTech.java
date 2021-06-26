@@ -1,6 +1,6 @@
 package com.wingmann.wingtech;
 
-import com.wingmann.wingtech.blocks.*;
+import com.wingmann.wingtech.blocks.ModBlocks;
 import com.wingmann.wingtech.containers.AtmosphericCondenserContainer;
 import com.wingmann.wingtech.containers.TestBlockContainer;
 import com.wingmann.wingtech.data.TeaRecipeBuilder;
@@ -17,12 +17,9 @@ import com.wingmann.wingtech.tile.AtmosphericCondenserTile;
 import com.wingmann.wingtech.tile.TestBlockTile;
 import com.wingmann.wingtech.util.TeaData;
 import com.wingmann.wingtech.world.WorldGen;
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -66,6 +63,7 @@ public class WingTech
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register deferred item registry
         ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ModBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, WorldGen::generateChunk); // World gen listener
 
@@ -83,20 +81,6 @@ public class WingTech
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
 
-//        @SubscribeEvent
-//        public static void registerRecipeSerialziers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
-//            event.getRegistry().register(new SpecialRecipeSerializer<>(TeaRecipe::new).setRegistryName("crafting_special_tea"));
-//        }
-
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
-            event.getRegistry().register(new TestBlock());
-            event.getRegistry().register(new AtmosphericCondenser());
-            event.getRegistry().register(new TungstenOre());
-            event.getRegistry().register(new Flower());
-            event.getRegistry().register(new MachineCasing());
-        }
-
         @SubscribeEvent
         public static void onColorHandlerEvent(ColorHandlerEvent.Item event) {
             for(TeaData data : TeaRegistry.getRegistry().getTeaData().values()) {
@@ -106,29 +90,14 @@ public class WingTech
 
         @SubscribeEvent
         public static void onClientSetupEvent(FMLClientSetupEvent event) {
-            RenderTypeLookup.setRenderLayer(ModBlocks.FLOWER, RenderType.cutout()); // Set flower block to be rendered properly
-        }
-
-        @SubscribeEvent
-        public static void onItemsRegistry(final RegistryEvent.Register<Item> event) {
-            // Register item
-            event.getRegistry().register(ModItems.genericItem("tungsten_ingot"));
-            event.getRegistry().register(ModItems.genericItem("teacup"));
-
-            // Register BlockItems
-            event.getRegistry().register(new BlockItem(ModBlocks.TESTBLOCK, new Item.Properties().tab(setup.itemGroup)).setRegistryName("testblock"));
-            event.getRegistry().register(new BlockItem(ModBlocks.ATMOSPHERIC_CONDENSER, new Item.Properties().tab(setup.itemGroup)).setRegistryName("atmospheric_condenser"));
-            event.getRegistry().register(new BlockItem(ModBlocks.TUNGSTEN_ORE, new Item.Properties().tab(setup.itemGroup)).setRegistryName("tungsten_ore"));
-            event.getRegistry().register(new BlockItem(ModBlocks.FLOWER, new Item.Properties().tab(setup.itemGroup)).setRegistryName("flower"));
-            event.getRegistry().register(new BlockItem(ModBlocks.MACHINE_CASING, new Item.Properties().tab(setup.itemGroup)).setRegistryName("machine_casing"));
-
+            RenderTypeLookup.setRenderLayer(ModBlocks.FLOWER.get(), RenderType.cutout()); // Set flower block to be rendered properly
         }
 
         @SubscribeEvent
         public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event)
         {
-            event.getRegistry().register(TileEntityType.Builder.of(TestBlockTile::new, ModBlocks.TESTBLOCK).build((null)).setRegistryName("testblock"));
-            event.getRegistry().register(TileEntityType.Builder.of(AtmosphericCondenserTile::new, ModBlocks.ATMOSPHERIC_CONDENSER).build((null)).setRegistryName("atmospheric_condenser"));
+            event.getRegistry().register(TileEntityType.Builder.of(TestBlockTile::new, ModBlocks.TESTBLOCK.get()).build((null)).setRegistryName("testblock"));
+            event.getRegistry().register(TileEntityType.Builder.of(AtmosphericCondenserTile::new, ModBlocks.ATMOSPHERIC_CONDENSER.get()).build((null)).setRegistryName("atmospheric_condenser"));
         }
 
         @SubscribeEvent

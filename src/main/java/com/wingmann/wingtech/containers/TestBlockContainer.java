@@ -166,6 +166,6 @@ public class TestBlockContainer extends Container {
 
     @Override
     public boolean stillValid(PlayerEntity playerIn) {
-        return stillValid(IWorldPosCallable.create(entity.getLevel(), entity.getBlockPos()), playerEntity, ModBlocks.TESTBLOCK);
+        return stillValid(IWorldPosCallable.create(entity.getLevel(), entity.getBlockPos()), playerEntity, ModBlocks.TESTBLOCK.get());
     }
 }

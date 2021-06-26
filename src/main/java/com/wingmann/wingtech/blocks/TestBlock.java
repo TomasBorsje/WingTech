@@ -28,7 +28,6 @@ public class TestBlock extends Block {
                 .sound(SoundType.METAL)
                 .strength(2.5f)
         );
-        setRegistryName("testblock");
     }
 
     @Override

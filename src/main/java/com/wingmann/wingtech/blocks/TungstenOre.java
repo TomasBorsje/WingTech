@@ -10,7 +10,6 @@ public class TungstenOre extends Block {
                 .sound(SoundType.STONE)
                 .strength(2.5f)
         );
-        setRegistryName("tungsten_ore");
     }
 }
 

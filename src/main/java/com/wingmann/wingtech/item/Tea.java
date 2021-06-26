@@ -28,10 +28,10 @@ public class Tea extends Item {
             entityLiving.addEffect(new EffectInstance(Effects.DIG_SPEED, 600, 1, false, false));
         }
         if (stack.isEmpty()) {
-            return new ItemStack(ModItems.TEACUP); // Replace tea with empty cup
+            return new ItemStack(ModItems.TEACUP.get()); // Replace tea with empty cup
         } else {
             if (entityLiving instanceof PlayerEntity && !((PlayerEntity)entityLiving).abilities.instabuild) {
-                ItemStack itemstack = new ItemStack(ModItems.TEACUP);
+                ItemStack itemstack = new ItemStack(ModItems.TEACUP.get());
                 PlayerEntity playerentity = (PlayerEntity)entityLiving;
                 if (!playerentity.inventory.add(itemstack)) {
                     playerentity.drop(itemstack, false);
