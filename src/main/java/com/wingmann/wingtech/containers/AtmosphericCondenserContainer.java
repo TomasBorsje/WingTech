@@ -6,9 +6,7 @@ import com.wingmann.wingtech.tools.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
@@ -44,7 +42,25 @@ public class AtmosphericCondenserContainer extends Container {
         this.playerInventory = new InvWrapper(playerInventory);
 
         entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-            addSlot(new SlotItemHandler(h, 0, 82, 24) {
+            addSlot(new SlotItemHandler(h, 0, 73, 14) {
+                @Override
+                public boolean mayPlace(@Nonnull ItemStack stack) {
+                    return false;
+                }
+            });
+            addSlot(new SlotItemHandler(h, 1, 91, 14) {
+                @Override
+                public boolean mayPlace(@Nonnull ItemStack stack) {
+                    return false;
+                }
+            });
+            addSlot(new SlotItemHandler(h, 2, 73, 32) {
+                @Override
+                public boolean mayPlace(@Nonnull ItemStack stack) {
+                    return false;
+                }
+            });
+            addSlot(new SlotItemHandler(h, 3, 91, 32) {
                 @Override
                 public boolean mayPlace(@Nonnull ItemStack stack) {
                     return false;
@@ -105,44 +121,46 @@ public class AtmosphericCondenserContainer extends Container {
 
     @Override
     public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasItem()) {
-            ItemStack stack = slot.getItem();
-            itemstack = stack.copy();
-            if (index == 0) {
-                if (!this.moveItemStackTo(stack, 1, 37, true)) {
-                    return ItemStack.EMPTY;
-                }
-                slot.setChanged();
-            } else {
-                if (stack.getItem() == Items.DIAMOND) {
-                    if (!this.moveItemStackTo(stack, 0, 1, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (index < 28) {
-                    if (!this.moveItemStackTo(stack, 28, 37, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (index < 37 && !this.moveItemStackTo(stack, 1, 28, false)) {
-                    return ItemStack.EMPTY;
-                }
-            }
 
-            if (stack.isEmpty()) {
-                slot.set(ItemStack.EMPTY);
-            } else {
-                slot.setChanged();
-            }
-
-            if (stack.getCount() == itemstack.getCount()) {
-                return ItemStack.EMPTY;
-            }
-
-            slot.onTake(playerIn, stack);
-        }
-
-        return itemstack;
+        return ItemStack.EMPTY;
+//        ItemStack itemstack = ItemStack.EMPTY;
+//        Slot slot = this.slots.get(index);
+//        if (slot != null && slot.hasItem()) {
+//            ItemStack stack = slot.getItem();
+//            itemstack = stack.copy();
+//            if (index == 0) {
+//                if (!this.moveItemStackTo(stack, 1, 37, true)) {
+//                    return ItemStack.EMPTY;
+//                }
+//                slot.setChanged();
+//            } else {
+//                if (stack.getItem() == Items.DIAMOND) {
+//                    if (!this.moveItemStackTo(stack, 0, 1, false)) {
+//                        return ItemStack.EMPTY;
+//                    }
+//                } else if (index < 28) {
+//                    if (!this.moveItemStackTo(stack, 28, 37, false)) {
+//                        return ItemStack.EMPTY;
+//                    }
+//                } else if (index < 37 && !this.moveItemStackTo(stack, 1, 28, false)) {
+//                    return ItemStack.EMPTY;
+//                }
+//            }
+//
+//            if (stack.isEmpty()) {
+//                slot.set(ItemStack.EMPTY);
+//            } else {
+//                slot.setChanged();
+//            }
+//
+//            if (stack.getCount() == itemstack.getCount()) {
+//                return ItemStack.EMPTY;
+//            }
+//
+//            slot.onTake(playerIn, stack);
+//        }
+//
+//        return itemstack;
     }
 
     private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {

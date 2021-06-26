@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:rotten_flesh",
+    "minecraft:chicken",
+    "minecraft:porkchop",
+    "minecraft:mutton",
+    "minecraft:rabbit",
+    "minecraft:beef"
+  ]
+}

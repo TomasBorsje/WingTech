@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "fertilizer",
+  "ingredients": [
+    {
+      "tag": "minecraft:sand"
+    },
+    {
+      "item": "wingtech:nitrogen"
+    },
+    {
+      "tag": "wingtech:fertilizer_ingredient"
+    },
+    {
+      "item": "wingtech:oxygen"
+    }
+  ],
+  "result": {
+    "item": "wingtech:fertilizer",
+    "count": 12
+  }
+}

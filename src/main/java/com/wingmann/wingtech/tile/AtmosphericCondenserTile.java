@@ -8,6 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -46,6 +47,7 @@ public class AtmosphericCondenserTile extends TileEntity implements ITickableTil
     private Random rand = new Random();
     private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
     private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
+    private Item[] products = {ModItems.NITROGEN.get(), ModItems.HYDROGEN.get(), ModItems.OXYGEN.get()};
 
     @Override
     public void setRemoved() {
@@ -62,7 +64,17 @@ public class AtmosphericCondenserTile extends TileEntity implements ITickableTil
         }
         if(getProgressTicks() >= TICKS_PER_OPERATION) // Complete machine's operation
         {
-            itemHandler.insertItem(0, new ItemStack(ModItems.NITROGEN.get()), false);
+            ItemStack output = new ItemStack(products[rand.nextInt(products.length)]);
+            for(int i = 0; i < itemHandler.getSlots(); i++) {
+                if(itemHandler.getStackInSlot(i).getItem() == output.getItem() && itemHandler.getStackInSlot(i).getCount() < itemHandler.getStackInSlot(i).getMaxStackSize()) {
+                    itemHandler.getStackInSlot(i).grow(1);
+                    break;
+                }
+                else if(itemHandler.getStackInSlot(i).isEmpty()) {
+                    itemHandler.insertItem(i, output, false);
+                    break;
+                }
+            }
             setProgressTicks(AWAITING_OPERATION);
         }
         if(getProgressTicks() >= PROCESSING) { // Machine is processing
@@ -94,7 +106,7 @@ public class AtmosphericCondenserTile extends TileEntity implements ITickableTil
     }
 
     private ItemStackHandler createHandler() {
-        return new ItemStackHandler(1) {
+        return new ItemStackHandler(4) {
             @Override
             protected void onContentsChanged(int slot) {
                 setChanged();
@@ -102,15 +114,12 @@ public class AtmosphericCondenserTile extends TileEntity implements ITickableTil
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return stack.getItem() == ModItems.NITROGEN.get();
+                return true;
             }
 
             @Nonnull
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                if (stack.getItem() != ModItems.NITROGEN.get()) {
-                    return stack;
-                }
                 return super.insertItem(slot, stack, simulate);
             }
         };
