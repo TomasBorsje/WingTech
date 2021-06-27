@@ -50,7 +50,7 @@ public class TeaSetup {
     public static void registerTeasItems() {
         for(TeaData data : TeaRegistry.getRegistry().getTeaData().values()) {
             ModItems.ITEMS.register("dynamictea_" + data.Type.toLowerCase(Locale.ENGLISH).replace(' ', '_'),
-                    () -> new DynamicTea(new Item.Properties().craftRemainder(ModItems.TEACUP).tab(setup.itemGroup).stacksTo(16), data));
+                    () -> new DynamicTea(new Item.Properties().craftRemainder(ModItems.TEACUP.get()).tab(setup.itemGroup).stacksTo(16), data));
         }
     }
 

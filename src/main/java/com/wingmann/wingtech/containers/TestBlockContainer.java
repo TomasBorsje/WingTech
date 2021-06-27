@@ -1,14 +1,14 @@
 package com.wingmann.wingtech.containers;
 
 import com.wingmann.wingtech.blocks.ModBlocks;
-import com.wingmann.wingtech.tileentities.TestBlockTile;
+import com.wingmann.wingtech.item.ModItems;
+import com.wingmann.wingtech.tile.TestBlockTile;
 import com.wingmann.wingtech.tools.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
@@ -110,7 +110,7 @@ public class TestBlockContainer extends Container {
                 }
                 slot.setChanged();
             } else {
-                if (stack.getItem() == Items.DIAMOND) {
+                if (stack.getItem() == ModItems.PROTEIN_PASTE.get()) {
                     if (!this.moveItemStackTo(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -166,6 +166,6 @@ public class TestBlockContainer extends Container {
 
     @Override
     public boolean stillValid(PlayerEntity playerIn) {
-        return stillValid(IWorldPosCallable.create(entity.getLevel(), entity.getBlockPos()), playerEntity, ModBlocks.TESTBLOCK);
+        return stillValid(IWorldPosCallable.create(entity.getLevel(), entity.getBlockPos()), playerEntity, ModBlocks.TESTBLOCK.get());
     }
 }

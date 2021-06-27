@@ -10,6 +10,5 @@ public class MachineCasing extends Block {
                 .sound(SoundType.METAL)
                 .strength(2.5f)
         );
-        setRegistryName("machine_casing");
     }
 }

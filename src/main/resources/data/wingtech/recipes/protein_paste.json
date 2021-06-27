@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "protein_paste",
+  "ingredients": [
+    {
+      "item": "minecraft:coal"
+    },
+    {
+      "item": "wingtech:nitrogen"
+    },
+    {
+      "item": "wingtech:hydrogen"
+    },
+    {
+      "item": "wingtech:oxygen"
+    }
+  ],
+  "result": {
+    "item": "wingtech:protein_paste",
+    "count": 2
+  }
+}

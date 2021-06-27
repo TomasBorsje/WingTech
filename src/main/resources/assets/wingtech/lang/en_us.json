@@ -1,9 +1,10 @@
 {
-  "block.wingtech.testblock": "Bee Generator",
+  "block.wingtech.testblock": "Bio-Organic Constructor",
   "block.wingtech.atmospheric_condenser": "Atmospheric Condenser",
   "block.wingtech.tungsten_ore": "Tungsten Ore",
   "block.wingtech.machine_casing": "Machine Casing",
   "block.wingtech.flower": "§6Awesome Flower",
+  "block.wingtech.tungsten_block": "Block of Tungsten",
 
   "item.wingtech.tungsten_ingot": "Tungsten Ingot",
   "item.wingtech.teacup": "Tea Cup",
@@ -11,6 +12,10 @@
   "item.wingtech.power_cell": "Power Cell",
   "item.wingtech.mesh": "Mesh",
   "item.wingtech.fertilizer": "Industrial Fertilizer",
+  "item.wingtech.nitrogen": "Nitrogen",
+  "item.wingtech.oxygen": "Oxygen",
+  "item.wingtech.hydrogen": "Hydrogen",
+  "item.wingtech.protein_paste": "Protein Paste",
 
   "wingtech.ui.dynamictea_tooltip_1": "§7A nice warm cup of tea.",
   "wingtech.ui.dynamictea_tooltip_2": "§7Grants %s.",

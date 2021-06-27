@@ -1,6 +1,6 @@
 package com.wingmann.wingtech.blocks;
 
-import com.wingmann.wingtech.tileentities.AtmosphericCondenserTile;
+import com.wingmann.wingtech.tile.AtmosphericCondenserTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -29,12 +29,11 @@ public class AtmosphericCondenser extends Block{
                 .sound(SoundType.METAL)
                 .strength(2.5f)
         );
-        setRegistryName("atmospheric_condenser");
     }
 
     @Override
     public ActionResultType use(BlockState p_225533_1_, World worldIn, BlockPos pos, PlayerEntity player, Hand p_225533_5_, BlockRayTraceResult p_225533_6_) {
-        if(!worldIn.isClientSide()) // If we're on clientside
+        if(!worldIn.isClientSide()) // If we're not clientside
         {
             TileEntity entity = worldIn.getBlockEntity(pos);
             if(entity instanceof INamedContainerProvider)

@@ -1,4 +1,4 @@
-package com.wingmann.wingtech.tileentities;
+package com.wingmann.wingtech.tile;
 
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.registries.ObjectHolder;

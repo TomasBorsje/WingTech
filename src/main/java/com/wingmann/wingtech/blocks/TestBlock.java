@@ -1,6 +1,6 @@
 package com.wingmann.wingtech.blocks;
 
-import com.wingmann.wingtech.tileentities.TestBlockTile;
+import com.wingmann.wingtech.tile.TestBlockTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -28,7 +28,6 @@ public class TestBlock extends Block {
                 .sound(SoundType.METAL)
                 .strength(2.5f)
         );
-        setRegistryName("testblock");
     }
 
     @Override

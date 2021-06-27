@@ -49,7 +49,7 @@ public class TeaRecipeBuilder implements IResourceManagerReloadListener {
                 new ResourceLocation(WingTech.MODID, data.Type.toLowerCase().replace(' ', '_') + "_tea_recipe"),
                 "",
                 new ItemStack(TeaInfoUtil.GetItemFromData(data), 1),
-                NonNullList.of(Ingredient.EMPTY, Ingredient.of(TeaInfoUtil.GetIngredientItemFromData(data)), Ingredient.of(ModItems.TEACUP))
+                NonNullList.of(Ingredient.EMPTY, Ingredient.of(TeaInfoUtil.GetIngredientItemFromData(data)), Ingredient.of(ModItems.TEACUP.get()))
         );
     }
 

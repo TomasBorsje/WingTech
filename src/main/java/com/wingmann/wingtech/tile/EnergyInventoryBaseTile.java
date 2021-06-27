@@ -1,17 +1,15 @@
-package com.wingmann.wingtech.tileentities;
+package com.wingmann.wingtech.tile;
 
-import com.wingmann.wingtech.containers.AtmosphericCondenserContainer;
 import com.wingmann.wingtech.tools.CustomEnergyStorage;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -25,27 +23,18 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Random;
 
-import static com.wingmann.wingtech.tileentities.ModTileEntities.ATMOSPHERIC_CONDENSER_TILE;
-
-public class AtmosphericCondenserTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
-    public AtmosphericCondenserTile() {
-        super(ATMOSPHERIC_CONDENSER_TILE);
+public class EnergyInventoryBaseTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+    public EnergyInventoryBaseTile(TileEntityType<?> tileEntityType, int energyStorageCapacity) {
+        super(tileEntityType);
+        this.energyStorageCapacity = energyStorageCapacity;
     }
-
-    public static int TICKS_PER_OPERATION = 120;
-    public static int RF_PER_TICK_USAGE = 0;
-    private static int AWAITING_OPERATION = -1;
-    private static int PROCESSING = 0;
-
 
     private ItemStackHandler itemHandler = createHandler();
     private CustomEnergyStorage energyStorage = createEnergy();
-    private int progressTicks = AWAITING_OPERATION;
-    private Random rand = new Random();
     private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
     private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
+    private int energyStorageCapacity;
 
     @Override
     public void setRemoved() {
@@ -56,32 +45,13 @@ public class AtmosphericCondenserTile extends TileEntity implements ITickableTil
 
     @Override
     public void tick() {
-        if(level.isClientSide()) // Don't operate on clients
-        {
-            return;
-        }
-        if(getProgressTicks() >= TICKS_PER_OPERATION) // Complete machine's operation
-        {
-            itemHandler.insertItem(0, new ItemStack(Items.COAL), false);
-            setProgressTicks(AWAITING_OPERATION);
-        }
-        if(getProgressTicks() >= PROCESSING) { // Machine has received a diamond and is processing
-            if(energyStorage.getEnergyStored() >= RF_PER_TICK_USAGE) { // If machine has enough rf for a tick of processing
-                energyStorage.consumeEnergy(RF_PER_TICK_USAGE); // Use rf
-                setProgressTicks(getProgressTicks() + 1);
-            }
-        }
-        if (getProgressTicks() == AWAITING_OPERATION) { // Machine will begin operating again
-            setProgressTicks(PROCESSING);
-            this.setChanged();
-        }
+        return;
     }
 
     @Override
     public void load(BlockState state, CompoundNBT nbt) {
         itemHandler.deserializeNBT(nbt.getCompound("inv"));
         energyStorage.deserializeNBT(nbt.getCompound("energy"));
-        setProgressTicks(nbt.getInt("progress"));
         super.load(state, nbt);
     }
 
@@ -89,35 +59,20 @@ public class AtmosphericCondenserTile extends TileEntity implements ITickableTil
     public CompoundNBT save(CompoundNBT tag) {
         tag.put("inv", itemHandler.serializeNBT());
         tag.put("energy", energyStorage.serializeNBT());
-        tag.putInt("progress", getProgressTicks());
         return super.save(tag);
     }
 
     private ItemStackHandler createHandler() {
-        return new ItemStackHandler(1) {
+        return new ItemStackHandler(0) {
             @Override
             protected void onContentsChanged(int slot) {
                 setChanged();
             }
-
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return stack.getItem() == Items.COAL;
-            }
-
-            @Nonnull
-            @Override
-            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                if (stack.getItem() != Items.COAL) {
-                    return stack;
-                }
-                return super.insertItem(slot, stack, simulate);
-            }
         };
     }
 
-    private CustomEnergyStorage createEnergy() {
-        return new CustomEnergyStorage(50000) {
+    protected CustomEnergyStorage createEnergy() {
+        return new CustomEnergyStorage(energyStorageCapacity) {
             @Override
             protected void onEnergyChanged() {
                 setChanged();
@@ -146,15 +101,7 @@ public class AtmosphericCondenserTile extends TileEntity implements ITickableTil
 
     @Nullable
     @Override
-    public Container createMenu(int id, PlayerInventory inv, PlayerEntity playerEntity) {
-        return new AtmosphericCondenserContainer(id, level, getBlockPos(), inv, playerEntity);
-    }
-
-    public int getProgressTicks() {
-        return progressTicks;
-    }
-
-    public void setProgressTicks(int progressTicks) {
-        this.progressTicks = progressTicks;
+    public Container createMenu(int p_createMenu_1_, PlayerInventory inv, PlayerEntity playerEntity) {
+        throw new IllegalArgumentException("Subclass of EnergyInventoryBaseTile must provide its own implementation of createMenu()");
     }
 }

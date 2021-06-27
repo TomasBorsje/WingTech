@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sos",
+    "hsh",
+    "sos"
+  ],
+  "key": {
+    "s": {
+      "tag": "minecraft:sand"
+    },
+    "o": {
+      "item": "wingtech:oxygen"
+    },
+    "h": {
+      "item": "wingtech:hydrogen"
+    }
+  },
+  "result": {
+    "item": "minecraft:tnt",
+    "count": 1
+  }
+}
