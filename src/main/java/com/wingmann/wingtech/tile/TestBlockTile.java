@@ -1,6 +1,7 @@
 package com.wingmann.wingtech.tile;
 
 import com.wingmann.wingtech.containers.TestBlockContainer;
+import com.wingmann.wingtech.item.ModItems;
 import com.wingmann.wingtech.tools.CustomEnergyStorage;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
@@ -10,9 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -38,14 +37,14 @@ import java.util.Random;
 
 import static com.wingmann.wingtech.tile.ModTileEntities.TESTBLOCK_TILE;
 
+// TODO: Change all instances of 'testblock' to 'bio_organic_constructor'
 public class TestBlockTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
     public TestBlockTile() {
         super(TESTBLOCK_TILE);
     }
 
     public static int TICKS_PER_OPERATION = 100;
-    public static int RF_PER_TICK_USAGE = 200;
-    public static Item FUEL_ITEM = Items.DIAMOND;
+    public static int RF_PER_TICK_USAGE = 0;
 
     private ItemStackHandler itemHandler = createHandler();
     private CustomEnergyStorage energyStorage = createEnergy();
@@ -100,16 +99,16 @@ public class TestBlockTile extends TileEntity implements ITickableTileEntity, IN
                 this.setChanged();
             }
         }
-        if(getProgressTicks() >=0) { // Machine has received a diamond and is processing
+        if(getProgressTicks() >=0) { // Machine has received fuel and is processing
             if(energyStorage.getEnergyStored() >= RF_PER_TICK_USAGE) { // If machine has at least 200 rf, do a tick of processing
                 energyStorage.consumeEnergy(RF_PER_TICK_USAGE); // Use rf
                 setProgressTicks(getProgressTicks() + 1);
             }
         }
         ItemStack stack = itemHandler.getStackInSlot(0);
-        if (stack.getItem() == Items.DIAMOND && getProgressTicks() == -1) { // Machine will accept diamond again
+        if (stack.getItem() == ModItems.PROTEIN_PASTE.get() && stack.getCount() > 3 && getProgressTicks() == -1) { // Machine will accept fuel again
             setProgressTicks(0);
-            itemHandler.extractItem(0, 1, false); // Remove diamond
+            itemHandler.extractItem(0, 4, false); // Remove fuel
             this.setChanged();
         }
     }
@@ -139,13 +138,13 @@ public class TestBlockTile extends TileEntity implements ITickableTileEntity, IN
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return stack.getItem() == FUEL_ITEM;
+                return stack.getItem() == ModItems.PROTEIN_PASTE.get();
             }
 
             @Nonnull
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                if (stack.getItem() != FUEL_ITEM) {
+                if (stack.getItem() != ModItems.PROTEIN_PASTE.get()) {
                     return stack;
                 }
                 return super.insertItem(slot, stack, simulate);

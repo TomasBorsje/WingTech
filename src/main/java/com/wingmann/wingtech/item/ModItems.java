@@ -22,6 +22,7 @@ public class ModItems {
     public static final RegistryObject<Item> HYDROGEN = ITEMS.register("hydrogen", ModItems::genericItem);
     public static final RegistryObject<Item> TEACUP = ITEMS.register("teacup", ModItems::genericItem);
     public static final RegistryObject<Item> TUNGSTEN_INGOT = ITEMS.register("tungsten_ingot", ModItems::genericItem);
+    public static final RegistryObject<Item> PROTEIN_PASTE = ITEMS.register("protein_paste", ModItems::genericItem);
 
     // Block Items
     public static final RegistryObject<BlockItem> FLOWER = ITEMS.register("flower", () -> genericBlockItem(ModBlocks.FLOWER.get()));
