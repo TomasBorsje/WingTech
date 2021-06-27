@@ -7,7 +7,7 @@ Uses **Protein Paste** and power to assemble random animals.
 Uses power to collect **Nitrogen**, **Hydrogen**, and **Oxygen** from the atmosphere.
 ## Tea System
 Teas are consumable items crafted with a **teacup** and another ingredient (usually a flower),
-providing a corresponding buff when consumed.
+that provide a corresponding buff when consumed.
 
 Add your own teas to the mod by putting a properly formatted JSON
 file in the mod's config directory. WingTech will generate models,
