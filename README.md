@@ -1,5 +1,5 @@
 ![WingTech Banner](https://i.imgur.com/VjiKUxX.png)
-Warning: This mod is in alpha! I am not responsible for world corruption, etc (although that is very unlikely).
+Warning: This mod is in alpha! I am not responsible for world corruption, etc. (although that is very unlikely).
 # Features
 ## Bio-Organic Constructor
 Uses **Protein Paste** and power to assemble random animals.
