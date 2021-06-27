@@ -61,13 +61,12 @@ public class WingTech
 
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        // Register deferred item registry
+        // Register deferred registries
         ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        // Register other event listeners
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, WorldGen::generateChunk); // World gen listener
-
-
     }
 
     private void setup(final FMLCommonSetupEvent event)

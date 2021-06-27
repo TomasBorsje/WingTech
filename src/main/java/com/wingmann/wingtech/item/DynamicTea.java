@@ -64,8 +64,8 @@ public class DynamicTea extends Item {
                 return Color.WHITE.getRGB();
             }
             case 1: {
-                DynamicTea honeycombItem = (DynamicTea) stack.getItem();
-                return honeycombItem.getTeaColour();
+                DynamicTea teaItem = (DynamicTea) stack.getItem();
+                return teaItem.getTeaColour();
             }
             default:
                 return Color.WHITE.getRGB();
