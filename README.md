@@ -26,7 +26,7 @@ If copy pasting this json, make sure to remove the comments! (// and onwards)
 ## Misc Items
 **Industrial Fertilizer**: Bonemeal alternative.
 
-**Awesome Flower**: Flower that generates in the world, crafts into orange dye.
+**Awesome Flower (to be renamed)**: Flower that generates in the world, crafts into orange dye.
 
 **Tungsten Ore**: The main metal WingTech uses.
 
